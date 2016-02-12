@@ -1,15 +1,15 @@
-===========
-sql_grammar
-===========
+==========
+mysqlparse
+==========
 
-.. image:: https://img.shields.io/pypi/v/sql_grammar.svg
-        :target: https://pypi.python.org/pypi/sql_grammar
+.. image:: https://img.shields.io/pypi/v/mysqlparse.svg
+        :target: https://pypi.python.org/pypi/mysqlparse
 
-.. image:: https://img.shields.io/travis/seporaitis/sql_grammar.svg
-        :target: https://travis-ci.org/seporaitis/sql_grammar
+.. image:: https://img.shields.io/travis/seporaitis/mysqlparse.svg
+        :target: https://travis-ci.org/seporaitis/mysqlparse
 
 
-A highly experimental attempt to have a sane parser library to parse (at least) MySQL statements.
+A highly experimental attempt to have a sane parser library to parse MySQL statements.
 
 At the moment - use it at your own risk!
 

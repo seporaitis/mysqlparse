@@ -45,7 +45,7 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	flake8 sql_grammar tests
+	flake8 mysqlparse tests
 
 test:
 	python setup.py test
@@ -54,7 +54,7 @@ test-all:
 	tox
 
 coverage:
-	coverage run --source sql_grammar setup.py test
+	coverage run --source mysqlparse setup.py test
 	coverage report -m
 	coverage html
 	$(BROWSER) htmlcov/index.html

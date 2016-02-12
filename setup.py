@@ -15,18 +15,18 @@ test_requirements = [
 ]
 
 setup(
-    name='sql_grammar',
+    name='mysqlparse',
     version='0.0.1',
     description="A library for parsing SQL statements.",
     long_description=readme,
     author="Julius Seporaitis",
     author_email='julius@seporaitis.net',
-    url='https://github.com/seporaitis/sql_grammar',
+    url='https://github.com/seporaitis/mysqlparse',
     packages=[
-        'sql_grammar',
+        'mysqlparse',
     ],
-    package_dir={'sql_grammar':
-                 'sql_grammar'},
+    package_dir={'mysqlparse':
+                 'mysqlparse'},
     include_package_data=True,
     install_requires=requirements,
     license="AGPLv3+",
