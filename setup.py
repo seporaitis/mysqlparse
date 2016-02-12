@@ -8,10 +8,12 @@ with open('README.rst') as readme_file:
 
 requirements = [
     # TODO: put package requirements here
+    'pyparsing',
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
+    # TODO: put testing requirements here
+    
 ]
 
 setup(
