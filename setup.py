@@ -13,7 +13,7 @@ requirements = [
 
 test_requirements = [
     # TODO: put testing requirements here
-    
+    'pyparsing',
 ]
 
 setup(
