@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import unittest
 
-import pyparsing
-
 from mysqlparse.grammar.column_definition import column_definition_syntax
 
 

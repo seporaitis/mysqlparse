@@ -23,7 +23,7 @@ class DataTypeSyntaxTest(unittest.TestCase):
         type_with_unsigned = "{type_name}(8) unsigned".format
         type_with_zerofill = "{type_name}(8) zerofill".format
         type_with_all_modifiers = "{type_name}(8) UNSIGNED ZEROFILL".format
-        
+
         for type_name in type_list:
             self.assertEquals(
                 data_type_syntax.parseString(type_plain(type_name=type_name)).data_type,
@@ -118,7 +118,7 @@ class DataTypeSyntaxTest(unittest.TestCase):
             self.assertTrue(
                 data_type_syntax.parseString("{type_name}(10, 2) ZEROFILL".format(type_name=type_name)).zerofill,
             )
-            
+
             self.assertTrue(
                 data_type_syntax.parseString("{type_name}(10, 2) UNSIGNED ZEROFILL".format(type_name=type_name)).unsigned,
             )
@@ -178,12 +178,15 @@ class DataTypeSyntaxTest(unittest.TestCase):
     def test_varchar(self):
         with self.assertRaises(pyparsing.ParseException):
             data_type_syntax.parseString("VARCHAR").data_type
-            
+
         self.assertEquals(data_type_syntax.parseString("VARCHAR(8)").length[0], '8')
         self.assertEquals(data_type_syntax.parseString("VARCHAR(8) BINARY").length[0], '8')
         self.assertEquals(data_type_syntax.parseString("VARCHAR(8) BINARY").binary, True)
         self.assertEquals(data_type_syntax.parseString("VARCHAR(8) CHARACTER SET 'utf8'").character_set, "utf8")
-        self.assertEquals(data_type_syntax.parseString("VARCHAR(8) COLLATE 'utf8_general'").collation_name, "utf8_general")
+        self.assertEquals(
+            data_type_syntax.parseString("VARCHAR(8) COLLATE 'utf8_general'").collation_name,
+            "utf8_general",
+        )
         self.assertEquals(
             data_type_syntax.parseString(
                 "VARCHAR(8) BINARY CHARACTER SET 'utf8' COLLATE 'utf8_general'"
@@ -210,7 +213,7 @@ class DataTypeSyntaxTest(unittest.TestCase):
     def test_varbinary(self):
         with self.assertRaises(pyparsing.ParseException):
             data_type_syntax.parseString("VARBINARY").data_type
-            
+
         self.assertEquals(data_type_syntax.parseString("VARBINARY(8)").length[0], '8')
 
     def test_blobs(self):
@@ -309,7 +312,7 @@ class DataTypeSyntaxTest(unittest.TestCase):
                 ).value_list.asList(),
                 ['option1', 'option2', 'option3'],
             )
-            
+
             self.assertEquals(
                 data_type_syntax.parseString(
                     "{type_name}('option1', 'option2', 'option3') CHARACTER SET 'utf8'".format(type_name=type_name)
@@ -337,7 +340,9 @@ class DataTypeSyntaxTest(unittest.TestCase):
             )
             self.assertEquals(
                 data_type_syntax.parseString(
-                    "{type_name}('option1', 'option2', 'option3') CHARACTER SET 'utf8' COLLATE 'utf8_general_ci'".format(type_name=type_name)
+                    "{type_name}('option1', 'option2', 'option3') CHARACTER SET 'utf8' COLLATE 'utf8_general_ci'".format(
+                        type_name=type_name
+                    )
                 ).collation_name,
                 'utf8_general_ci',
             )
