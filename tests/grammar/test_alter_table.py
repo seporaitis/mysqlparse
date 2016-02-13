@@ -1,11 +1,14 @@
 # -*- encoding:utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
+try:
+    from __future__ import absolute_import, division, print_function, unicode_literals
 
-import unittest
+    import unittest
 
-import pyparsing
+    import pyparsing
 
-from mysqlparse.grammar.alter_table import alter_table_syntax
+    from mysqlparse.grammar.alter_table import alter_table_syntax
+except ImportError as ex:
+    print(ex)
 
 
 class AlterTableSyntaxTest(unittest.TestCase):
