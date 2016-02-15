@@ -18,7 +18,7 @@ test_requirements = [
 
 setup(
     name='mysqlparse',
-    version='0.0.1',
+    version='0.1.0',
     description="A library for parsing SQL statements.",
     long_description=readme,
     author="Julius Seporaitis",
