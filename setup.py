@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from setuptools import setup
+from setuptools import find_packages, setup
 
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    # TODO: put package requirements here
     'pyparsing',
 ]
 
 test_requirements = [
-    # TODO: put testing requirements here
     'pyparsing',
 ]
 
@@ -24,10 +22,7 @@ setup(
     author="Julius Seporaitis",
     author_email='julius@seporaitis.net',
     url='https://github.com/seporaitis/mysqlparse',
-    packages=[
-        'mysqlparse',
-        'mysqlparse.grammar',
-    ],
+    packages=find_packages(exclude=['tests', 'tests.*']),
     package_dir={
         'mysqlparse': 'mysqlparse',
         'mysqlparse.grammar': 'mysqlparse/grammar'
@@ -47,6 +42,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     test_suite='tests',
     tests_require=test_requirements
