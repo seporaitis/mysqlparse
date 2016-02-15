@@ -18,7 +18,7 @@ test_requirements = [
 
 setup(
     name='mysqlparse',
-    version='0.1.0',
+    version='0.1.1',
     description="A library for parsing SQL statements.",
     long_description=readme,
     author="Julius Seporaitis",
@@ -26,9 +26,12 @@ setup(
     url='https://github.com/seporaitis/mysqlparse',
     packages=[
         'mysqlparse',
+        'mysqlparse.grammar',
     ],
-    package_dir={'mysqlparse':
-                 'mysqlparse'},
+    package_dir={
+        'mysqlparse': 'mysqlparse',
+        'mysqlparse.grammar': 'mysqlparse/grammar'
+    },
     include_package_data=True,
     install_requires=requirements,
     license="AGPLv3+",
