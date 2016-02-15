@@ -33,6 +33,3 @@ class SqlFileSyntaxTest(unittest.TestCase):
         self.assertEqual(len(sql_file.statements), 2)
         self.assertEqual(sql_file.statements[0].table_name, 'test_table1')
         self.assertEqual(sql_file.statements[1].table_name, 'test_table2')
-        
-
-        

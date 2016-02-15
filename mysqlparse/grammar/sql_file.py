@@ -8,5 +8,8 @@ from mysqlparse.grammar.alter_table import alter_table_syntax
 
 sql_file_syntax = Forward()
 sql_file_syntax <<= (
-    ZeroOrMore(Suppress(SkipTo(CaselessKeyword("ALTER"))) + Group(alter_table_syntax).setResultsName("statements", listAllMatches=True))
+    ZeroOrMore(
+        Suppress(SkipTo(CaselessKeyword("ALTER"))) +
+        Group(alter_table_syntax).setResultsName("statements", listAllMatches=True)
+    )
 )
