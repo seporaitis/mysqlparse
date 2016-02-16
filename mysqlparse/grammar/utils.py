@@ -12,19 +12,3 @@ def stripQuotes(s, loc, toks):
 
     """
     return [t.strip("'") for t in toks]
-
-
-def defaultValue(value):
-    """Return a default value.
-
-    Useful when `Optional` does not match, but some value should still
-    be set in `ParseResult`.
-
-    """
-    def _default(toks):
-        if not toks:
-            return [value]
-        if len(toks) == 1 and not toks[0]:
-            return [value]
-
-    return _default

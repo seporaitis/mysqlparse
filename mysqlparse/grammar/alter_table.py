@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from pyparsing import *
 
 from mysqlparse.grammar.column_definition import column_definition_syntax
-from mysqlparse.grammar.utils import stripQuotes, defaultValue
+from mysqlparse.grammar.utils import stripQuotes
 
 
 #
@@ -15,9 +15,10 @@ _column_name = Word(alphanums + "`_").setParseAction(stripQuotes)
 _add = CaselessKeyword("ADD").setParseAction(replaceWith("ADD COLUMN")).setResultsName("alter_action")
 _add_column = CaselessKeyword("ADD COLUMN").setResultsName("alter_action")
 _column_position = Optional(
-    Or([CaselessKeyword("FIRST"), Suppress(CaselessKeyword("AFTER")) + _column_name])
-).setParseAction(defaultValue("LAST")).setResultsName("column_position")
-_last_column = Empty().setParseAction(defaultValue("LAST")).setResultsName("column_position")
+    Or([CaselessKeyword("FIRST"), Suppress(CaselessKeyword("AFTER")) + _column_name]),
+    default="LAST"
+).setResultsName("column_position")
+_last_column = Empty().setParseAction(lambda toks: ["LAST"]).setResultsName("column_position")
 
 _alter_specification_syntax = Forward()
 _alter_specification_syntax <<= (
@@ -31,8 +32,9 @@ _alter_specification_syntax <<= (
 )
 
 _ignore = Optional(
-    CaselessKeyword("IGNORE").setParseAction(replaceWith(True))
-).setParseAction(defaultValue(False)).setResultsName("ignore")
+    CaselessKeyword("IGNORE").setParseAction(replaceWith(True)),
+    default=False,
+).setResultsName("ignore")
 
 
 #
