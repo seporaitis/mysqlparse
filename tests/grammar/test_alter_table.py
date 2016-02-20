@@ -91,7 +91,7 @@ class AlterTableSyntaxTest(unittest.TestCase):
         self.assertEquals(statement.alter_specification[1].index_columns[2].column_name, 'col2')
         self.assertEquals(statement.alter_specification[1].index_columns[2].length[0], '20')
         self.assertEquals(statement.alter_specification[1].index_columns[2].direction, 'DESC')
-        
+
     def test_alter_table_add_index_index_type(self):
         statement = alter_table_syntax.parseString("""
         ALTER TABLE test_test ADD col0 BIT(8) NOT NULL DEFAULT 0 FIRST,
@@ -115,11 +115,15 @@ class AlterTableSyntaxTest(unittest.TestCase):
         self.assertEquals(statement.alter_specification[1].index_columns[2].column_name, 'col2')
         self.assertEquals(statement.alter_specification[1].index_columns[2].length[0], '20')
         self.assertEquals(statement.alter_specification[1].index_columns[2].direction, 'DESC')
-        
+
     def test_alter_table_add_index_index_option(self):
         statement = alter_table_syntax.parseString("""
         ALTER TABLE test_test ADD col0 BIT(8) NOT NULL DEFAULT 0 FIRST,
-            ADD INDEX index1 (col0, col1 (10), col2 (20) DESC) KEY_BLOCK_SIZE=256 USING HASH WITH PARSER some_parser COMMENT 'test comment';
+            ADD INDEX index1 (col0, col1 (10), col2 (20) DESC)
+                      KEY_BLOCK_SIZE=256
+                      USING HASH
+                      WITH PARSER some_parser
+                      COMMENT 'test comment';
         """)
 
         self.assertFalse(statement.ignore)

@@ -33,10 +33,16 @@ _add_index = Or([
     CaselessKeyword("ADD INDEX").setResultsName("alter_action"),
     CaselessKeyword("ADD KEY").setParseAction(replaceWith("ADD INDEX")).setResultsName("alter_action"),
 ])
-_index_type = Optional(Suppress(CaselessKeyword("USING")) + Or([CaselessKeyword("BTREE"), CaselessKeyword("HASH")]), default=None).setResultsName("index_type")
+_index_type = Optional(
+    Suppress(CaselessKeyword("USING")) + Or([CaselessKeyword("BTREE"), CaselessKeyword("HASH")]),
+    default=None
+).setResultsName("index_type")
 _index_direction = Optional(Or([CaselessKeyword("ASC"), CaselessKeyword("DESC")]), default=None).setResultsName("direction")
-_index_column = (_column_name.setResultsName("column_name") + Optional(Suppress("(") + Word(nums) + Suppress(")"), default=None).setResultsName("length") +
-                 _index_direction)
+_index_column = (
+    _column_name.setResultsName("column_name") +
+    Optional(Suppress("(") + Word(nums) + Suppress(")"), default=None).setResultsName("length") +
+    _index_direction
+)
 _parser_name = Word(alphanums + "`_")
 
 _index_option = (
@@ -58,7 +64,10 @@ _index_option = (
 
 _alter_index_specification = [
     (_add_index + _index_name + _index_type +
-     Suppress("(") + delimitedList(OneOrMore(Group(_index_column).setResultsName("index_columns", listAllMatches=True))) + Suppress(")") + _index_option),
+     Suppress("(") +
+     delimitedList(OneOrMore(Group(_index_column).setResultsName("index_columns", listAllMatches=True))) +
+     Suppress(")") +
+     _index_option),
 ]
 
 
