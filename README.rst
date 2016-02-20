@@ -76,6 +76,8 @@ doesn't.
 
 * Raise an issue with how you would like to use this library.
 
+* Document the available properties in the parsed object.
+
 * Add a missing test case or suggest a way to avoid so much repetition
 in tests checking the same statement, but with variations.
 
