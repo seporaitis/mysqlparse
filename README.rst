@@ -69,20 +69,24 @@ previous version of SOME code, which does not know how to save
 How can you help?
 -----------------
 
-Read the generic ``CONTRIBUTORS.rst`` or here's a short personal
-sentiment:
+A short list of things that would help (from relatively easiest):
 
-This is being built as a potential support for potential dba tools
-that we might write at work, so naturally certain things will be
-implemented sooner. Currently these are few use-cases we're looking
-into:
+* Raise an issue with an edge case statement that **should** parse,
+  but doesn't.
 
-* Be able to provide suggestions to `ALTER TABLE` statements (e.g.:
-  announce when a statement is potentially not backwards compatible
-  with code)
-* Be able to generate commands for online schema change tools.
-* Potentially add some validation support, so that an SQL linting tool
-  could be written.
+* Raise an issue with how you would like to use this library.
+
+* Document the available properties in the parsed object.
+
+* Add a missing test case or suggest a way to avoid so much repetition
+  in tests checking the same statement, but with variations.
+
+* Suggest how to use `pyparsing` to do statement validation.
+
+* Maybe it is possible to generate `pyparsing` parser from the MySQL
+  source code?
+
+* Add ability to unparse the parse (sub)trees back into valid SQL.
 
 
 Why?
