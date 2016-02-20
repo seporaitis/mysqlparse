@@ -71,20 +71,20 @@ How can you help?
 
 A short list of things that would help (from relatively easiest):
 
-* Raise an issue with an edge case statement that **should** parse, but
-doesn't.
+* Raise an issue with an edge case statement that **should** parse,
+  but doesn't.
 
 * Raise an issue with how you would like to use this library.
 
 * Document the available properties in the parsed object.
 
 * Add a missing test case or suggest a way to avoid so much repetition
-in tests checking the same statement, but with variations.
+  in tests checking the same statement, but with variations.
 
 * Suggest how to use `pyparsing` to do statement validation.
 
 * Maybe it is possible to generate `pyparsing` parser from the MySQL
-source code?
+  source code?
 
 * Add ability to unparse the parse (sub)trees back into valid SQL.
 
