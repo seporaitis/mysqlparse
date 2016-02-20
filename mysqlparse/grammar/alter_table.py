@@ -11,6 +11,7 @@ from mysqlparse.grammar.utils import stripQuotes
 # PARTIAL PARSERS
 #
 
+# ADD COLUMN
 _column_name = Word(alphanums + "`_").setParseAction(stripQuotes)
 _add = CaselessKeyword("ADD").setParseAction(replaceWith("ADD COLUMN")).setResultsName("alter_action")
 _add_column = CaselessKeyword("ADD COLUMN").setResultsName("alter_action")
@@ -20,15 +21,53 @@ _column_position = Optional(
 ).setResultsName("column_position")
 _last_column = Empty().setParseAction(lambda toks: ["LAST"]).setResultsName("column_position")
 
+_alter_column_specification = [
+    (_add + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
+    (_add_column + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
+    (_add_column + delimitedList(_column_name.setResultsName("column_name") + column_definition_syntax) + _last_column),
+]
+
+# ADD INDEX
+_index_name = Word(alphanums + "`_").setParseAction(stripQuotes).setResultsName("index_name")
+_add_index = Or([
+    CaselessKeyword("ADD INDEX").setResultsName("alter_action"),
+    CaselessKeyword("ADD KEY").setParseAction(replaceWith("ADD INDEX")).setResultsName("alter_action"),
+])
+_index_type = Optional(Suppress(CaselessKeyword("USING")) + Or([CaselessKeyword("BTREE"), CaselessKeyword("HASH")]), default=None).setResultsName("index_type")
+_index_direction = Optional(Or([CaselessKeyword("ASC"), CaselessKeyword("DESC")]), default=None).setResultsName("direction")
+_index_column = (_column_name.setResultsName("column_name") + Optional(Suppress("(") + Word(nums) + Suppress(")"), default=None).setResultsName("length") +
+                 _index_direction)
+_parser_name = Word(alphanums + "`_")
+
+_index_option = (
+    Optional(
+        Suppress(CaselessKeyword("KEY_BLOCK_SIZE")) + Suppress(Optional("=")) + Word(nums),
+        default=None
+    ).setResultsName("key_block_size") +
+    _index_type +
+    Optional(
+        Suppress(CaselessKeyword("WITH PARSER")) + _parser_name,
+        default=None,
+    ).setResultsName("parser_name") +
+    Optional(
+        Suppress(CaselessKeyword("COMMENT")) + Or([QuotedString("'"), QuotedString('"')]),
+        default=None,
+    ).setResultsName("comment")
+)
+
+
+_alter_index_specification = [
+    (_add_index + _index_name + _index_type +
+     Suppress("(") + delimitedList(OneOrMore(Group(_index_column).setResultsName("index_columns", listAllMatches=True))) + Suppress(")") + _index_option),
+]
+
+
 _alter_specification_syntax = Forward()
 _alter_specification_syntax <<= (
-    (Or([
-        (_add + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
-        (_add_column + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
-        (_add_column +
-         delimitedList(_column_name.setResultsName("column_name") + column_definition_syntax) +
-         _last_column),
-    ]))
+    (Or(
+        _alter_column_specification +
+        _alter_index_specification
+    ))
 )
 
 _ignore = Optional(
