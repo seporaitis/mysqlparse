@@ -6,6 +6,9 @@ from setuptools import find_packages, setup
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
+with open('HISTORY.rst') as history_file:
+    history = history_file.read().replace('.. :changelog:', '')
+
 requirements = [
     'pyparsing',
 ]
@@ -18,7 +21,7 @@ setup(
     name='mysqlparse',
     version='0.1.3',
     description="A library for parsing SQL statements.",
-    long_description=readme,
+    long_description=readme + '\n\n' + history,
     author="Julius Seporaitis",
     author_email='julius@seporaitis.net',
     url='https://github.com/seporaitis/mysqlparse',
