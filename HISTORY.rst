@@ -11,6 +11,7 @@ PENDING
 * Add ``six`` as a dependency to make writing Py2 and Py3 compatible code easier.
 * Add support for ``ALTER TABLE .. MODIFY [COLUMN]`` statements.
 * Add support for ``ALTER TABLE .. DROP *`` statements.
+* Move version string from ``setup.py`` into ``mysqlparse``.
 
 
 0.1.3 (2016-02-20)

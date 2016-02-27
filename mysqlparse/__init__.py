@@ -5,6 +5,10 @@ import six
 
 from mysqlparse.grammar.sql_file import sql_file_syntax
 
+__author__ = 'Julius Seporaitis'
+__email__ = 'julius@seporaitis.net'
+__version__ = '0.1.3'
+
 
 def parse(file_or_string):
     """Parse a file-like object or string.

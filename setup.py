@@ -1,6 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import os
+import re
 from setuptools import find_packages, setup
+
+
+def get_version(package):
+    """
+    Return package version as listed in `__version__` in `init.py`.
+    """
+    init_py = open(os.path.join(package, '__init__.py')).read()
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
+version = get_version('mysqlparse')
 
 
 with open('README.rst') as readme_file:
@@ -21,7 +34,7 @@ test_requirements = [
 
 setup(
     name='mysqlparse',
-    version='0.1.3',
+    version=version,
     description="A library for parsing SQL statements.",
     long_description=readme + '\n\n' + history,
     author="Julius Seporaitis",
