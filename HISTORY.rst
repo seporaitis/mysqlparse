@@ -7,6 +7,7 @@ PENDING
 -------
 
 * Brought back ``HISTORY.rst``.
+* Add ``mysqlparse.parse`` function.
 
 
 0.1.3 (2016-02-20)
