@@ -27,8 +27,8 @@ Some properties that can be accessed.
 
 .. code-block:: python
 
-    >>> from mysqlparse.grammar.sql_file import sql_file_syntax
-    >>> sql = sql_file_syntax.parseString("""
+    >>> import mysqlparse
+    >>> sql = mysqlparse.parse("""
     ...     ALTER TABLE `django_user` ADD COLUMN `notes` LONGTEXT NOT NULL
     ... """)
     >>> print(sql.statements[0].statement_type)

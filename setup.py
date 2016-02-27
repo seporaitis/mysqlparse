@@ -11,10 +11,12 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'pyparsing',
+    'six',
 ]
 
 test_requirements = [
     'pyparsing',
+    'six',
 ]
 
 setup(
