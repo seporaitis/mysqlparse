@@ -6,7 +6,7 @@ import unittest
 from mysqlparse.grammar.alter_table import alter_table_syntax
 
 
-class AlterTableSyntaxTest(unittest.TestCase):
+class AlterTableAddColumnSyntaxTest(unittest.TestCase):
 
     def test_alter_table_add(self):
         statement = alter_table_syntax.parseString("""
@@ -67,6 +67,9 @@ class AlterTableSyntaxTest(unittest.TestCase):
         self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
         self.assertEquals(statement.alter_specification[3].column_name, 'col3')
         self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+
+
+class AlterTableAddIndexSyntaxTest(unittest.TestCase):
 
     def test_alter_table_add_index(self):
         statement = alter_table_syntax.parseString("""
@@ -146,3 +149,66 @@ class AlterTableSyntaxTest(unittest.TestCase):
         self.assertEquals(statement.alter_specification[1].key_block_size[0], '256')
         self.assertEquals(statement.alter_specification[1].parser_name[0], 'some_parser')
         self.assertEquals(statement.alter_specification[1].comment[0], 'test comment')
+
+
+class AlterTableModifyColumnSyntaxTest(unittest.TestCase):
+
+    def test_alter_table_modify(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER IGNORE TABLE test_test MODIFY col_no0 BIT(8) NOT NULL DEFAULT 0 FIRST,
+            MODIFY col_no1 LONGTEXT NOT NULL,
+            MODIFY col_no2 VARCHAR(200) NULL,
+            MODIFY col_no3 BIT(8) AFTER col0;
+        """)
+
+        self.assertTrue(statement.ignore)
+        self.assertEquals(statement.statement_type, 'ALTER')
+        self.assertEquals(statement.table_name, 'test_test')
+        self.assertEquals(statement.alter_specification[0].column_name, 'col_no0')
+        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEquals(statement.alter_specification[1].column_name, 'col_no1')
+        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEquals(statement.alter_specification[2].column_name, 'col_no2')
+        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEquals(statement.alter_specification[3].column_name, 'col_no3')
+        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+
+    def test_alter_table_modify_column(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test_test MODIFY COLUMN col0 BIT(8) NOT NULL DEFAULT 0 FIRST,
+            MODIFY COLUMN col1 LONGTEXT NOT NULL,
+            MODIFY COLUMN col2 VARCHAR(200) NULL,
+            MODIFY COLUMN col3 BIT(8) AFTER col0;
+        """)
+
+        self.assertFalse(statement.ignore)
+        self.assertEquals(statement.statement_type, 'ALTER')
+        self.assertEquals(statement.table_name, 'test_test')
+        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
+        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEquals(statement.alter_specification[1].column_name, 'col1')
+        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEquals(statement.alter_specification[2].column_name, 'col2')
+        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEquals(statement.alter_specification[3].column_name, 'col3')
+        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+
+    def test_alter_table_modify_column_mixed(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test_test MODIFY col0 BIT(8) NOT NULL DEFAULT 0 FIRST,
+            MODIFY COLUMN col1 LONGTEXT NOT NULL,
+            MODIFY COLUMN col2 VARCHAR(200) NULL,
+            MODIFY col3 BIT(8) AFTER col0;
+        """)
+
+        self.assertFalse(statement.ignore)
+        self.assertEquals(statement.statement_type, 'ALTER')
+        self.assertEquals(statement.table_name, 'test_test')
+        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
+        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEquals(statement.alter_specification[1].column_name, 'col1')
+        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEquals(statement.alter_specification[2].column_name, 'col2')
+        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEquals(statement.alter_specification[3].column_name, 'col3')
+        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
