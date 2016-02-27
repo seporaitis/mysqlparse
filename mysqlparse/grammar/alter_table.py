@@ -81,12 +81,34 @@ _modify_column_specification = [
     (_modify_column + delimitedList(_column_name.setResultsName("column_name") + column_definition_syntax) + _last_column),
 ]
 
+# DROP
+_fk_symbol = Word(alphanums + "`_").setParseAction(stripQuotes).setResultsName("fk_symbol")
+
+_drop = CaselessKeyword("DROP").setParseAction(replaceWith("DROP COLUMN")).setResultsName("alter_action")
+_drop_column = CaselessKeyword("DROP COLUMN").setResultsName("alter_action")
+_drop_pk = CaselessKeyword("DROP PRIMARY KEY").setResultsName("alter_action")
+_drop_index = CaselessKeyword("DROP INDEX").setResultsName("alter_action")
+_drop_key = CaselessKeyword("DROP KEY").setParseAction(replaceWith("DROP INDEX")).setResultsName("alter_action")
+_drop_fk = CaselessKeyword("DROP FOREIGN KEY").setResultsName("alter_action")
+
+
+_drop_specification = [
+    (_drop + _column_name.setResultsName("column_name")),
+    (_drop_column + _column_name.setResultsName("column_name")),
+    (_drop_pk),
+    (_drop_index + _index_name),
+    (_drop_key + _index_name),
+    (_drop_fk + _fk_symbol),
+]
+
+
 _alter_specification_syntax = Forward()
 _alter_specification_syntax <<= (
     (Or(
         _alter_column_specification +
         _alter_index_specification +
-        _modify_column_specification
+        _modify_column_specification +
+        _drop_specification
     ))
 )
 

@@ -17,16 +17,16 @@ class AlterTableAddColumnSyntaxTest(unittest.TestCase):
         """)
 
         self.assertTrue(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col_no0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].column_name, 'col_no1')
-        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[2].column_name, 'col_no2')
-        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[3].column_name, 'col_no3')
-        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col_no0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col_no1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col_no2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col_no3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
 
     def test_alter_table_add_column(self):
         statement = alter_table_syntax.parseString("""
@@ -37,16 +37,16 @@ class AlterTableAddColumnSyntaxTest(unittest.TestCase):
         """)
 
         self.assertFalse(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].column_name, 'col1')
-        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[2].column_name, 'col2')
-        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[3].column_name, 'col3')
-        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
 
     def test_alter_table_add_column_mixed(self):
         statement = alter_table_syntax.parseString("""
@@ -57,16 +57,16 @@ class AlterTableAddColumnSyntaxTest(unittest.TestCase):
         """)
 
         self.assertFalse(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].column_name, 'col1')
-        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[2].column_name, 'col2')
-        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[3].column_name, 'col3')
-        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
 
 
 class AlterTableAddIndexSyntaxTest(unittest.TestCase):
@@ -78,22 +78,22 @@ class AlterTableAddIndexSyntaxTest(unittest.TestCase):
         """)
 
         self.assertFalse(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].alter_action, 'ADD INDEX')
-        self.assertEquals(statement.alter_specification[1].index_name, 'index1')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].alter_action, 'ADD INDEX')
+        self.assertEqual(statement.alter_specification[1].index_name, 'index1')
         self.assertFalse(statement.alter_specification[1].index_type)
-        self.assertEquals(statement.alter_specification[1].index_columns[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[1].index_columns[0].column_name, 'col0')
         self.assertFalse(statement.alter_specification[1].index_columns[0].length)
         self.assertFalse(statement.alter_specification[1].index_columns[0].direction)
-        self.assertEquals(statement.alter_specification[1].index_columns[1].column_name, 'col1')
-        self.assertEquals(statement.alter_specification[1].index_columns[1].length[0], '10')
+        self.assertEqual(statement.alter_specification[1].index_columns[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].index_columns[1].length[0], '10')
         self.assertFalse(statement.alter_specification[1].index_columns[1].direction)
-        self.assertEquals(statement.alter_specification[1].index_columns[2].column_name, 'col2')
-        self.assertEquals(statement.alter_specification[1].index_columns[2].length[0], '20')
-        self.assertEquals(statement.alter_specification[1].index_columns[2].direction, 'DESC')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].length[0], '20')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].direction, 'DESC')
 
     def test_alter_table_add_index_index_type(self):
         statement = alter_table_syntax.parseString("""
@@ -102,22 +102,22 @@ class AlterTableAddIndexSyntaxTest(unittest.TestCase):
         """)
 
         self.assertFalse(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].alter_action, 'ADD INDEX')
-        self.assertEquals(statement.alter_specification[1].index_name, 'index1')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].alter_action, 'ADD INDEX')
+        self.assertEqual(statement.alter_specification[1].index_name, 'index1')
         self.assertFalse(statement.alter_specification[1].index_type)
-        self.assertEquals(statement.alter_specification[1].index_columns[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[1].index_columns[0].column_name, 'col0')
         self.assertFalse(statement.alter_specification[1].index_columns[0].length)
         self.assertFalse(statement.alter_specification[1].index_columns[0].direction)
-        self.assertEquals(statement.alter_specification[1].index_columns[1].column_name, 'col1')
-        self.assertEquals(statement.alter_specification[1].index_columns[1].length[0], '10')
+        self.assertEqual(statement.alter_specification[1].index_columns[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].index_columns[1].length[0], '10')
         self.assertFalse(statement.alter_specification[1].index_columns[1].direction)
-        self.assertEquals(statement.alter_specification[1].index_columns[2].column_name, 'col2')
-        self.assertEquals(statement.alter_specification[1].index_columns[2].length[0], '20')
-        self.assertEquals(statement.alter_specification[1].index_columns[2].direction, 'DESC')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].length[0], '20')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].direction, 'DESC')
 
     def test_alter_table_add_index_index_option(self):
         statement = alter_table_syntax.parseString("""
@@ -130,25 +130,25 @@ class AlterTableAddIndexSyntaxTest(unittest.TestCase):
         """)
 
         self.assertFalse(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].alter_action, 'ADD INDEX')
-        self.assertEquals(statement.alter_specification[1].index_name, 'index1')
-        self.assertEquals(statement.alter_specification[1].index_type[0], 'HASH')
-        self.assertEquals(statement.alter_specification[1].index_columns[0].column_name, 'col0')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].alter_action, 'ADD INDEX')
+        self.assertEqual(statement.alter_specification[1].index_name, 'index1')
+        self.assertEqual(statement.alter_specification[1].index_type[0], 'HASH')
+        self.assertEqual(statement.alter_specification[1].index_columns[0].column_name, 'col0')
         self.assertFalse(statement.alter_specification[1].index_columns[0].length)
         self.assertFalse(statement.alter_specification[1].index_columns[0].direction)
-        self.assertEquals(statement.alter_specification[1].index_columns[1].column_name, 'col1')
-        self.assertEquals(statement.alter_specification[1].index_columns[1].length[0], '10')
+        self.assertEqual(statement.alter_specification[1].index_columns[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].index_columns[1].length[0], '10')
         self.assertFalse(statement.alter_specification[1].index_columns[1].direction)
-        self.assertEquals(statement.alter_specification[1].index_columns[2].column_name, 'col2')
-        self.assertEquals(statement.alter_specification[1].index_columns[2].length[0], '20')
-        self.assertEquals(statement.alter_specification[1].index_columns[2].direction, 'DESC')
-        self.assertEquals(statement.alter_specification[1].key_block_size[0], '256')
-        self.assertEquals(statement.alter_specification[1].parser_name[0], 'some_parser')
-        self.assertEquals(statement.alter_specification[1].comment[0], 'test comment')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].length[0], '20')
+        self.assertEqual(statement.alter_specification[1].index_columns[2].direction, 'DESC')
+        self.assertEqual(statement.alter_specification[1].key_block_size[0], '256')
+        self.assertEqual(statement.alter_specification[1].parser_name[0], 'some_parser')
+        self.assertEqual(statement.alter_specification[1].comment[0], 'test comment')
 
 
 class AlterTableModifyColumnSyntaxTest(unittest.TestCase):
@@ -162,16 +162,16 @@ class AlterTableModifyColumnSyntaxTest(unittest.TestCase):
         """)
 
         self.assertTrue(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col_no0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].column_name, 'col_no1')
-        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[2].column_name, 'col_no2')
-        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[3].column_name, 'col_no3')
-        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col_no0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col_no1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col_no2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col_no3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
 
     def test_alter_table_modify_column(self):
         statement = alter_table_syntax.parseString("""
@@ -182,16 +182,16 @@ class AlterTableModifyColumnSyntaxTest(unittest.TestCase):
         """)
 
         self.assertFalse(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].column_name, 'col1')
-        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[2].column_name, 'col2')
-        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[3].column_name, 'col3')
-        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
 
     def test_alter_table_modify_column_mixed(self):
         statement = alter_table_syntax.parseString("""
@@ -202,13 +202,106 @@ class AlterTableModifyColumnSyntaxTest(unittest.TestCase):
         """)
 
         self.assertFalse(statement.ignore)
-        self.assertEquals(statement.statement_type, 'ALTER')
-        self.assertEquals(statement.table_name, 'test_test')
-        self.assertEquals(statement.alter_specification[0].column_name, 'col0')
-        self.assertEquals(statement.alter_specification[0].column_position, 'FIRST')
-        self.assertEquals(statement.alter_specification[1].column_name, 'col1')
-        self.assertEquals(statement.alter_specification[1].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[2].column_name, 'col2')
-        self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
-        self.assertEquals(statement.alter_specification[3].column_name, 'col3')
-        self.assertEquals(statement.alter_specification[3].column_position, 'col0')
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
+
+
+class AlterTableDropSyntaxTest(unittest.TestCase):
+
+    def test_drop(self):
+        statement = alter_table_syntax.parseString(
+            "ALTER TABLE test_test DROP col_no0;"
+        )
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].alter_action, 'DROP COLUMN')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col_no0')
+
+    def test_drop_column(self):
+        statement = alter_table_syntax.parseString(
+            "ALTER TABLE test_test DROP COLUMN col_no0;"
+        )
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].alter_action, 'DROP COLUMN')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col_no0')
+
+    def test_drop_primary_key(self):
+        statement = alter_table_syntax.parseString(
+            "ALTER TABLE test_test DROP PRIMARY KEY;"
+        )
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].alter_action, 'DROP PRIMARY KEY')
+
+    def test_drop_index(self):
+        statement = alter_table_syntax.parseString(
+            "ALTER TABLE test_test DROP INDEX idx_no0;"
+        )
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].alter_action, 'DROP INDEX')
+        self.assertEqual(statement.alter_specification[0].index_name, 'idx_no0')
+
+    def test_drop_key(self):
+        statement = alter_table_syntax.parseString(
+            "ALTER TABLE test_test DROP KEY idx_no0;"
+        )
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].alter_action, 'DROP INDEX')
+        self.assertEqual(statement.alter_specification[0].index_name, 'idx_no0')
+
+    def test_drop_foreign_key(self):
+        statement = alter_table_syntax.parseString(
+            "ALTER TABLE test_test DROP FOREIGN KEY fk_no0;"
+        )
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].alter_action, 'DROP FOREIGN KEY')
+        self.assertEqual(statement.alter_specification[0].fk_symbol, 'fk_no0')
+
+    def test_drop_mixed(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test_test DROP col_no0,
+            DROP COLUMN col_no1,
+            DROP PRIMARY KEY,
+            DROP INDEX idx_no0,
+            DROP KEY idx_no1,
+            DROP FOREIGN KEY fk_no0;
+        """)
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].alter_action, 'DROP COLUMN')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col_no0')
+        self.assertEqual(statement.alter_specification[1].alter_action, 'DROP COLUMN')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col_no1')
+        self.assertEqual(statement.alter_specification[2].alter_action, 'DROP PRIMARY KEY')
+        self.assertEqual(statement.alter_specification[3].alter_action, 'DROP INDEX')
+        self.assertEqual(statement.alter_specification[3].index_name, 'idx_no0')
+        self.assertEqual(statement.alter_specification[4].alter_action, 'DROP INDEX')
+        self.assertEqual(statement.alter_specification[4].index_name, 'idx_no1')
+        self.assertEqual(statement.alter_specification[5].alter_action, 'DROP FOREIGN KEY')
+        self.assertEqual(statement.alter_specification[5].fk_symbol, 'fk_no0')
