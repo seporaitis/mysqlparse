@@ -1,6 +1,8 @@
 # -*- encoding:utf-8 -*-
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import six
+
 from mysqlparse.grammar.sql_file import sql_file_syntax
 
 
@@ -15,7 +17,7 @@ def parse(file_or_string):
     """
     if hasattr(file_or_string, 'read') and hasattr(file_or_string.read, '__call__'):
         return sql_file_syntax.parseString(file_or_string.read())
-    elif isinstance(file_or_string, basestring):
+    elif isinstance(file_or_string, six.string_types):
         return sql_file_syntax.parseString(file_or_string)
     else:
         raise TypeError("Expected file-like or string object, but got '{type_name}' instead.".format(
