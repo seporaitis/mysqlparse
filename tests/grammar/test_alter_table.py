@@ -192,7 +192,7 @@ class AlterTableModifyColumnSyntaxTest(unittest.TestCase):
         self.assertEquals(statement.alter_specification[2].column_position, 'LAST')
         self.assertEquals(statement.alter_specification[3].column_name, 'col3')
         self.assertEquals(statement.alter_specification[3].column_position, 'col0')
-    
+
     def test_alter_table_modify_column_mixed(self):
         statement = alter_table_syntax.parseString("""
         ALTER TABLE test_test MODIFY col0 BIT(8) NOT NULL DEFAULT 0 FIRST,
