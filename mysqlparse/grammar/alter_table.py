@@ -70,12 +70,23 @@ _alter_index_specification = [
      _index_option),
 ]
 
+# MODIFY COLUMN
+_modify = CaselessKeyword("MODIFY").setParseAction(replaceWith("MODIFY COLUMN")).setResultsName("alter_action")
+_modify_column = CaselessKeyword("MODIFY COLUMN").setResultsName("alter_action")
+
+
+_modify_column_specification = [
+    (_modify + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
+    (_modify_column + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
+    (_modify_column + delimitedList(_column_name.setResultsName("column_name") + column_definition_syntax) + _last_column),
+]
 
 _alter_specification_syntax = Forward()
 _alter_specification_syntax <<= (
     (Or(
         _alter_column_specification +
-        _alter_index_specification
+        _alter_index_specification +
+        _modify_column_specification
     ))
 )
 
