@@ -34,4 +34,4 @@ class ParseTest(unittest.TestCase):
         with self.assertRaises(TypeError) as ctx:
             mysqlparse.parse(None)
 
-        self.assertEqual(ctx.exception.message, "Expected file-like or string object, but got 'NoneType' instead.")
+        self.assertEqual(str(ctx.exception), "Expected file-like or string object, but got 'NoneType' instead.")
