@@ -29,3 +29,9 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(len(sql_file.statements), 2)
         self.assertEqual(sql_file.statements[0].table_name, 'test_table1')
         self.assertEqual(sql_file.statements[1].table_name, 'test_table2')
+
+    def test_typeerror(self):
+        with self.assertRaises(TypeError) as ctx:
+            mysqlparse.parse(None)
+
+        self.assertEqual(ctx.exception.message, "Expected file-like or string object, but got 'NoneType' instead.")

@@ -15,5 +15,9 @@ def parse(file_or_string):
     """
     if hasattr(file_or_string, 'read') and hasattr(file_or_string.read, '__call__'):
         return sql_file_syntax.parseString(file_or_string.read())
-    else:
+    elif isinstance(file_or_string, basestring):
         return sql_file_syntax.parseString(file_or_string)
+    else:
+        raise TypeError("Expected file-like or string object, but got '{type_name}' instead.".format(
+            type_name=type(file_or_string).__name__,
+        ))
