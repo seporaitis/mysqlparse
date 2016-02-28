@@ -3,8 +3,8 @@
 History
 -------
 
-PENDING
--------
+0.1.4 (2016-02-28)
+------------------
 
 * Brought back ``HISTORY.rst``.
 * Add ``mysqlparse.parse`` function.
