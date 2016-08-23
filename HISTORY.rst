@@ -3,8 +3,8 @@
 History
 -------
 
-Pending
--------
+0.1.5 (2016-08-23)
+------------------
 
 * Change the licence from ``AGPLv3`` to ``MIT`` licence.
 
