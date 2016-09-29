@@ -81,9 +81,9 @@ A short list of things that would help (from relatively easiest):
 * Add a missing test case or suggest a way to avoid so much repetition
   in tests checking the same statement, but with variations.
 
-* Suggest how to use `pyparsing` to do statement validation.
+* Suggest how to use ``pyparsing`` to do statement validation.
 
-* Maybe it is possible to generate `pyparsing` parser from the MySQL
+* Maybe it is possible to generate ``pyparsing`` parser from the MySQL
   source code?
 
 * Add ability to unparse the parse (sub)trees back into valid SQL.
