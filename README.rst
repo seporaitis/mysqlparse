@@ -5,7 +5,7 @@ mysqlparse
 .. image:: https://img.shields.io/pypi/v/mysqlparse.svg
         :target: https://pypi.python.org/pypi/mysqlparse
 
-.. image:: https://img.shields.io/travis/seporaitis/mysqlparse.svg
+.. image:: https://img.shields.io/travis/seporaitis/mysqlparse/master.svg
         :target: https://travis-ci.org/seporaitis/mysqlparse
 
 
