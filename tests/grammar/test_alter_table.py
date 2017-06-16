@@ -214,6 +214,81 @@ class AlterTableModifyColumnSyntaxTest(unittest.TestCase):
         self.assertEqual(statement.alter_specification[3].column_position, 'col0')
 
 
+class AlterTableChangeColumnSyntaxTest(unittest.TestCase):
+
+    def test_alter_table_change(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER IGNORE TABLE test_test CHANGE col_no0 col_0 BIT(8) NOT NULL DEFAULT 0 FIRST,
+            CHANGE col_no1 col_1 LONGTEXT NOT NULL,
+            CHANGE col_no2 col_2 VARCHAR(200) NULL,
+            CHANGE col_no3 col_3 BIT(8) AFTER col0;
+        """)
+
+        self.assertTrue(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col_no0')
+        self.assertEqual(statement.alter_specification[0].new_column_name, 'col_0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col_no1')
+        self.assertEqual(statement.alter_specification[1].new_column_name, 'col_1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col_no2')
+        self.assertEqual(statement.alter_specification[2].new_column_name, 'col_2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col_no3')
+        self.assertEqual(statement.alter_specification[3].new_column_name, 'col_3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
+
+    def test_alter_table_change_column(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test_test CHANGE COLUMN col0 col_no0 BIT(8) NOT NULL DEFAULT 0 FIRST,
+            CHANGE COLUMN col1 col_no1 LONGTEXT NOT NULL,
+            CHANGE COLUMN col2 col_no2 VARCHAR(200) NULL,
+            CHANGE COLUMN col3 col_no3 BIT(8) AFTER col0;
+        """)
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].new_column_name, 'col_no0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].new_column_name, 'col_no1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[2].new_column_name, 'col_no2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col3')
+        self.assertEqual(statement.alter_specification[3].new_column_name, 'col_no3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
+
+    def test_alter_table_change_column_mixed(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test_test CHANGE col0 col_no0 BIT(8) NOT NULL DEFAULT 0 FIRST,
+            CHANGE COLUMN col1 col_no1 LONGTEXT NOT NULL,
+            CHANGE COLUMN col2 col_no2 VARCHAR(200) NULL,
+            CHANGE col3 col_no3 BIT(8) AFTER col0;
+        """)
+
+        self.assertFalse(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col0')
+        self.assertEqual(statement.alter_specification[0].new_column_name, 'col_no0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col1')
+        self.assertEqual(statement.alter_specification[1].new_column_name, 'col_no1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col2')
+        self.assertEqual(statement.alter_specification[2].new_column_name, 'col_no2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col3')
+        self.assertEqual(statement.alter_specification[3].new_column_name, 'col_no3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
+
+
 class AlterTableDropSyntaxTest(unittest.TestCase):
 
     def test_drop(self):

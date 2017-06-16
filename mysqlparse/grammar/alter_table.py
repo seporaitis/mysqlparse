@@ -81,6 +81,25 @@ _modify_column_specification = [
     (_modify_column + delimitedList(_column_name.setResultsName("column_name") + column_definition_syntax) + _last_column),
 ]
 
+# CHANGE COLUMN
+_change = CaselessKeyword("CHANGE").setParseAction(replaceWith("CHANGE COLUMN")).setResultsName("alter_action")
+_change_column = CaselessKeyword("CHANGE COLUMN").setResultsName("alter_action")
+
+
+_change_column_specification = [
+    (_change + _column_name.setResultsName("column_name") +
+     _column_name.setResultsName("new_column_name") +
+     column_definition_syntax + _column_position),
+    (_change_column + _column_name.setResultsName("column_name") +
+     _column_name.setResultsName("new_column_name") +
+     column_definition_syntax + _column_position),
+    (_change_column +
+     delimitedList(_column_name.setResultsName("column_name") +
+                   _column_name.setResultsName("new_column_name") +
+                   column_definition_syntax) + _last_column),
+]
+
+
 # DROP
 _fk_symbol = Word(alphanums + "`_").setParseAction(stripQuotes).setResultsName("fk_symbol")
 
@@ -108,6 +127,7 @@ _alter_specification_syntax <<= (
         _alter_column_specification +
         _alter_index_specification +
         _modify_column_specification +
+        _change_column_specification +
         _drop_specification
     ))
 )
