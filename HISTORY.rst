@@ -3,6 +3,18 @@
 History
 -------
 
+PENDING
+-------
+
+* (Insert new release notes below this line)
+
+
+0.1.6 (2017-06-16)
+------------------
+
+* Add support for ``ALTER TABLE .. CHANGE COLUMN`` statements (contributed by @jgysland)
+
+
 0.1.5 (2016-08-23)
 ------------------
 
