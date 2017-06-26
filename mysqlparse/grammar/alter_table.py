@@ -144,10 +144,14 @@ _ignore = Optional(
 # Source: http://dev.mysql.com/doc/refman/5.7/en/alter-table.html
 #
 
+_database_name = (Optional(Word(alphanums + "`_") + FollowedBy('.') +
+                           Suppress('.'), default=None)
+                  .setResultsName("database_name")
+                  .setParseAction(lambda toks: toks[0]))
 alter_table_syntax = Forward()
 alter_table_syntax <<= (
     CaselessKeyword("ALTER").setResultsName("statement_type") + _ignore + Suppress(Optional(CaselessKeyword("TABLE"))) +
-    Word(alphanums + "`_").setResultsName("table_name") +
+    _database_name + Word(alphanums + "`_").setResultsName("table_name") +
     delimitedList(Group(_alter_specification_syntax).setResultsName("alter_specification", listAllMatches=True)) +
     Suppress(Optional(";"))
 )
