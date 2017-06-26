@@ -380,3 +380,31 @@ class AlterTableDropSyntaxTest(unittest.TestCase):
         self.assertEqual(statement.alter_specification[4].index_name, 'idx_no1')
         self.assertEqual(statement.alter_specification[5].alter_action, 'DROP FOREIGN KEY')
         self.assertEqual(statement.alter_specification[5].fk_symbol, 'fk_no0')
+
+
+class AlterTableDatabaseNameTest(unittest.TestCase):
+
+    def test_alter_table_database_name(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER IGNORE TABLE test_db.test_test CHANGE col_no0 col_0 BIT(8) NOT NULL DEFAULT 0 FIRST,
+            CHANGE col_no1 col_1 LONGTEXT NOT NULL,
+            CHANGE col_no2 col_2 VARCHAR(200) NULL,
+            CHANGE col_no3 col_3 BIT(8) AFTER col0;
+        """)
+
+        self.assertTrue(statement.ignore)
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.database_name, 'test_db')
+        self.assertEqual(statement.table_name, 'test_test')
+        self.assertEqual(statement.alter_specification[0].column_name, 'col_no0')
+        self.assertEqual(statement.alter_specification[0].new_column_name, 'col_0')
+        self.assertEqual(statement.alter_specification[0].column_position, 'FIRST')
+        self.assertEqual(statement.alter_specification[1].column_name, 'col_no1')
+        self.assertEqual(statement.alter_specification[1].new_column_name, 'col_1')
+        self.assertEqual(statement.alter_specification[1].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[2].column_name, 'col_no2')
+        self.assertEqual(statement.alter_specification[2].new_column_name, 'col_2')
+        self.assertEqual(statement.alter_specification[2].column_position, 'LAST')
+        self.assertEqual(statement.alter_specification[3].column_name, 'col_no3')
+        self.assertEqual(statement.alter_specification[3].new_column_name, 'col_3')
+        self.assertEqual(statement.alter_specification[3].column_position, 'col0')
