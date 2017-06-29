@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from pyparsing import *
 
 from mysqlparse.grammar.column_definition import column_definition_syntax
+from mysqlparse.grammar.identifier import identifier_syntax
 from mysqlparse.grammar.utils import stripQuotes
 
 
@@ -11,25 +12,25 @@ from mysqlparse.grammar.utils import stripQuotes
 # PARTIAL PARSERS
 #
 
-_database_name = (Optional(Word(alphanums + "`_") + FollowedBy('.') +
+_database_name = (Optional(identifier_syntax + FollowedBy('.') +
                            Suppress('.'), default=None)
                   .setResultsName("database_name")
                   .setParseAction(lambda toks: toks[0]))
 
 # ADD COLUMN
-_column_name = Word(alphanums + "`_").setParseAction(stripQuotes)
+_column_name = identifier_syntax.setResultsName("column_name")
 _add = CaselessKeyword("ADD").setParseAction(replaceWith("ADD COLUMN")).setResultsName("alter_action")
 _add_column = CaselessKeyword("ADD COLUMN").setResultsName("alter_action")
 _column_position = Optional(
-    Or([CaselessKeyword("FIRST"), Suppress(CaselessKeyword("AFTER")) + _column_name]),
+    Or([CaselessKeyword("FIRST"), Suppress(CaselessKeyword("AFTER")) + identifier_syntax]),
     default="LAST"
 ).setResultsName("column_position")
 _last_column = Empty().setParseAction(lambda toks: ["LAST"]).setResultsName("column_position")
 
 _alter_column_specification = [
-    (_add + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
-    (_add_column + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
-    (_add_column + delimitedList(_column_name.setResultsName("column_name") + column_definition_syntax) + _last_column),
+    (_add + _column_name + column_definition_syntax + _column_position),
+    (_add_column + _column_name + column_definition_syntax + _column_position),
+    (_add_column + delimitedList(_column_name + column_definition_syntax) + _last_column),
 ]
 
 # ADD INDEX
@@ -44,7 +45,7 @@ _index_type = Optional(
 ).setResultsName("index_type")
 _index_direction = Optional(Or([CaselessKeyword("ASC"), CaselessKeyword("DESC")]), default=None).setResultsName("direction")
 _index_column = (
-    _column_name.setResultsName("column_name") +
+    _column_name +
     Optional(Suppress("(") + Word(nums) + Suppress(")"), default=None).setResultsName("length") +
     _index_direction
 )
@@ -81,9 +82,9 @@ _modify_column = CaselessKeyword("MODIFY COLUMN").setResultsName("alter_action")
 
 
 _modify_column_specification = [
-    (_modify + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
-    (_modify_column + _column_name.setResultsName("column_name") + column_definition_syntax + _column_position),
-    (_modify_column + delimitedList(_column_name.setResultsName("column_name") + column_definition_syntax) + _last_column),
+    (_modify + _column_name + column_definition_syntax + _column_position),
+    (_modify_column + _column_name + column_definition_syntax + _column_position),
+    (_modify_column + delimitedList(_column_name + column_definition_syntax) + _last_column),
 ]
 
 # CHANGE COLUMN
@@ -92,15 +93,15 @@ _change_column = CaselessKeyword("CHANGE COLUMN").setResultsName("alter_action")
 
 
 _change_column_specification = [
-    (_change + _column_name.setResultsName("column_name") +
-     _column_name.setResultsName("new_column_name") +
+    (_change + _column_name +
+     identifier_syntax.setResultsName("new_column_name") +
      column_definition_syntax + _column_position),
-    (_change_column + _column_name.setResultsName("column_name") +
-     _column_name.setResultsName("new_column_name") +
+    (_change_column + _column_name +
+     identifier_syntax.setResultsName("new_column_name") +
      column_definition_syntax + _column_position),
     (_change_column +
-     delimitedList(_column_name.setResultsName("column_name") +
-                   _column_name.setResultsName("new_column_name") +
+     delimitedList(_column_name +
+                   identifier_syntax.setResultsName("new_column_name") +
                    column_definition_syntax) + _last_column),
 ]
 
@@ -117,8 +118,8 @@ _drop_fk = CaselessKeyword("DROP FOREIGN KEY").setResultsName("alter_action")
 
 
 _drop_specification = [
-    (_drop + _column_name.setResultsName("column_name")),
-    (_drop_column + _column_name.setResultsName("column_name")),
+    (_drop + _column_name),
+    (_drop_column + _column_name),
     (_drop_pk),
     (_drop_index + _index_name),
     (_drop_key + _index_name),

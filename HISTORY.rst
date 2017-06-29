@@ -7,6 +7,7 @@ PENDING
 -------
 
 * Add support for database names (contributed by @jgysland)
+* Add explicit support for MySQL identifiers
 * (Insert new release notes below this line)
 
 
