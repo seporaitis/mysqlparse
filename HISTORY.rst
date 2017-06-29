@@ -6,6 +6,7 @@ History
 PENDING
 -------
 
+* Add support for database names (contributed by @jgysland)
 * (Insert new release notes below this line)
 
 

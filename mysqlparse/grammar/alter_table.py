@@ -11,6 +11,11 @@ from mysqlparse.grammar.utils import stripQuotes
 # PARTIAL PARSERS
 #
 
+_database_name = (Optional(Word(alphanums + "`_") + FollowedBy('.') +
+                           Suppress('.'), default=None)
+                  .setResultsName("database_name")
+                  .setParseAction(lambda toks: toks[0]))
+
 # ADD COLUMN
 _column_name = Word(alphanums + "`_").setParseAction(stripQuotes)
 _add = CaselessKeyword("ADD").setParseAction(replaceWith("ADD COLUMN")).setResultsName("alter_action")
@@ -147,7 +152,7 @@ _ignore = Optional(
 alter_table_syntax = Forward()
 alter_table_syntax <<= (
     CaselessKeyword("ALTER").setResultsName("statement_type") + _ignore + Suppress(Optional(CaselessKeyword("TABLE"))) +
-    Word(alphanums + "`_").setResultsName("table_name") +
+    _database_name + Word(alphanums + "`_").setResultsName("table_name") +
     delimitedList(Group(_alter_specification_syntax).setResultsName("alter_specification", listAllMatches=True)) +
     Suppress(Optional(";"))
 )
