@@ -113,4 +113,4 @@ Tips
 
 To run a subset of tests::
 
-    $ tox -epy35 -- tests.grammar.test_alter_table
+    $ tox -epy35 -- -s tests.grammar.test_alter_table
