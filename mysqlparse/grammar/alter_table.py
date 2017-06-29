@@ -11,6 +11,11 @@ from mysqlparse.grammar.utils import stripQuotes
 # PARTIAL PARSERS
 #
 
+_database_name = (Optional(Word(alphanums + "`_") + FollowedBy('.') +
+                           Suppress('.'), default=None)
+                  .setResultsName("database_name")
+                  .setParseAction(lambda toks: toks[0]))
+
 # ADD COLUMN
 _column_name = Word(alphanums + "`_").setParseAction(stripQuotes)
 _add = CaselessKeyword("ADD").setParseAction(replaceWith("ADD COLUMN")).setResultsName("alter_action")
@@ -144,10 +149,6 @@ _ignore = Optional(
 # Source: http://dev.mysql.com/doc/refman/5.7/en/alter-table.html
 #
 
-_database_name = (Optional(Word(alphanums + "`_") + FollowedBy('.') +
-                           Suppress('.'), default=None)
-                  .setResultsName("database_name")
-                  .setParseAction(lambda toks: toks[0]))
 alter_table_syntax = Forward()
 alter_table_syntax <<= (
     CaselessKeyword("ALTER").setResultsName("statement_type") + _ignore + Suppress(Optional(CaselessKeyword("TABLE"))) +
