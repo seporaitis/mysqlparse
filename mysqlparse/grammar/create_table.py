@@ -5,7 +5,6 @@ from pyparsing import *
 
 from mysqlparse.grammar.column_definition import column_definition_syntax
 from mysqlparse.grammar.identifier import identifier_syntax
-from mysqlparse.grammar.utils import stripQuotes
 
 
 #
@@ -38,6 +37,13 @@ create_table_syntax = Forward()
 create_table_syntax <<= (
     (CaselessKeyword("CREATE").setResultsName("statement_type") + _temporary +
      _create_type + _if_not_exists + Word(alphanums + "`_").setResultsName("table_name")) +
-    (Suppress("(") + delimitedList(Group(_column_specification_syntax).setResultsName("column_specification", listAllMatches=True)) + Suppress(")")) +
-    Optional(ZeroOrMore(Group(_table_option)), default=[]).setResultsName("table_options")
+    (
+        Suppress("(") +
+        delimitedList(
+            Group(_column_specification_syntax).setResultsName("column_specification", listAllMatches=True)) +
+        Suppress(")")
+    ) +
+    Optional(
+        ZeroOrMore(Group(_table_option)), default=[]
+    ).setResultsName("table_options")
 )

@@ -32,7 +32,6 @@ class CreateTableSyntaxTest(unittest.TestCase):
         ) ENGINE=MyISAM AUTO_INCREMENT id
         """)
 
-        print(statement.table_options)
         self.assertEqual(statement.statement_type, 'CREATE')
         self.assertFalse(statement.temporary)
         self.assertTrue(statement.overwrite)
