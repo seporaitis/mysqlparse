@@ -5,7 +5,6 @@ from pyparsing import *
 
 from mysqlparse.grammar.column_definition import column_definition_syntax
 from mysqlparse.grammar.identifier import identifier_syntax
-from mysqlparse.grammar.utils import stripQuotes
 
 
 #
@@ -34,7 +33,7 @@ _alter_column_specification = [
 ]
 
 # ADD INDEX
-_index_name = Word(alphanums + "`_").setParseAction(stripQuotes).setResultsName("index_name")
+_index_name = identifier_syntax.setResultsName("index_name")
 _add_index = Or([
     CaselessKeyword("ADD INDEX").setResultsName("alter_action"),
     CaselessKeyword("ADD KEY").setParseAction(replaceWith("ADD INDEX")).setResultsName("alter_action"),
@@ -49,7 +48,6 @@ _index_column = (
     Optional(Suppress("(") + Word(nums) + Suppress(")"), default=None).setResultsName("length") +
     _index_direction
 )
-_parser_name = Word(alphanums + "`_")
 
 _index_option = (
     Optional(
@@ -58,7 +56,7 @@ _index_option = (
     ).setResultsName("key_block_size") +
     _index_type +
     Optional(
-        Suppress(CaselessKeyword("WITH PARSER")) + _parser_name,
+        Suppress(CaselessKeyword("WITH PARSER")) + identifier_syntax,
         default=None,
     ).setResultsName("parser_name") +
     Optional(
@@ -107,7 +105,7 @@ _change_column_specification = [
 
 
 # DROP
-_fk_symbol = Word(alphanums + "`_").setParseAction(stripQuotes).setResultsName("fk_symbol")
+_fk_symbol = identifier_syntax.setResultsName("fk_symbol")
 
 _drop = CaselessKeyword("DROP").setParseAction(replaceWith("DROP COLUMN")).setResultsName("alter_action")
 _drop_column = CaselessKeyword("DROP COLUMN").setResultsName("alter_action")
@@ -153,7 +151,7 @@ _ignore = Optional(
 alter_table_syntax = Forward()
 alter_table_syntax <<= (
     CaselessKeyword("ALTER").setResultsName("statement_type") + _ignore + Suppress(Optional(CaselessKeyword("TABLE"))) +
-    _database_name + Word(alphanums + "`_").setResultsName("table_name") +
+    _database_name + identifier_syntax.setResultsName("table_name") +
     delimitedList(Group(_alter_specification_syntax).setResultsName("alter_specification", listAllMatches=True)) +
     Suppress(Optional(";"))
 )
