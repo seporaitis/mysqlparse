@@ -14,7 +14,7 @@ from mysqlparse.grammar.identifier import identifier_syntax
 _database_name = (Optional(identifier_syntax + FollowedBy('.') +
                            Suppress('.'), default=None)
                   .setResultsName("database_name")
-                  .setParseAction(lambda toks: toks[0]))
+                  .setParseAction(lambda s, l, toks: toks[0]))
 
 # ADD COLUMN
 _column_name = identifier_syntax.setResultsName("column_name")
@@ -24,7 +24,7 @@ _column_position = Optional(
     Or([CaselessKeyword("FIRST"), Suppress(CaselessKeyword("AFTER")) + identifier_syntax]),
     default="LAST"
 ).setResultsName("column_position")
-_last_column = Empty().setParseAction(lambda toks: ["LAST"]).setResultsName("column_position")
+_last_column = Empty().setParseAction(lambda s, l, toks: ["LAST"]).setResultsName("column_position")
 
 _alter_column_specification = [
     (_add + _column_name + column_definition_syntax + _column_position),
