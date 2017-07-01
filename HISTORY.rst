@@ -6,8 +6,9 @@ History
 PENDING
 -------
 
-* Add support for database names (contributed by @jgysland)
-* Add explicit support for MySQL identifiers
+* Add support for database names (contributed by @jgysland).
+* Add explicit support for MySQL identifiers.
+* Add support for basic ``CREATE TABLE`` statements.
 * (Insert new release notes below this line)
 
 
