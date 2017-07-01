@@ -8,6 +8,9 @@ mysqlparse
 .. image:: https://img.shields.io/travis/seporaitis/mysqlparse/master.svg
         :target: https://travis-ci.org/seporaitis/mysqlparse
 
+.. image:: https://readthedocs.org/projects/mysqlparse/badge/?version=latest
+        :target: http://mysqlparse.readthedocs.io/en/latest/?badge=latest
+
 
 A highly experimental attempt to have a sane parser library to parse MySQL statements.
 
