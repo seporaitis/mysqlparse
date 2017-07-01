@@ -42,11 +42,3 @@ Contents
    installation
    statements
    structure
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
