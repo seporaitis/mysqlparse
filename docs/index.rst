@@ -7,7 +7,7 @@ mysqlparse documentation
 ======================================
 
 The purpose of ``mysqlparse`` library is to provide structural access
-to MySQL queries. Everything looks better with an example:
+to MySQL queries. It looks better with an example:
 
 .. code-block:: python
 
