@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import six
 
-from mysqlparse.grammar.sql_file import sql_file_syntax
-
 __author__ = 'Julius Seporaitis'
 __email__ = 'julius@seporaitis.net'
 __version__ = '0.1.6'
@@ -19,6 +17,8 @@ def parse(file_or_string):
     Returns:
         ParseResults: instance of pyparsing parse results.
     """
+    from mysqlparse.grammar.sql_file import sql_file_syntax
+
     if hasattr(file_or_string, 'read') and hasattr(file_or_string.read, '__call__'):
         return sql_file_syntax.parseString(file_or_string.read())
     elif isinstance(file_or_string, six.string_types):
