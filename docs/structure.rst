@@ -19,8 +19,15 @@ The following properties are accessible
 * ``sql.statements[] : list`` all individual sql statements, separated
   by ``;`` are accessible through this list.
 
-  * ``.statement_type : str``, currently only ``ALTER``.
-  * ``.database_name : str``, ``None`` or database
+  * ``.statement_type : str`` one of:
+
+    * ``ALTER``
+    * ``CREATE``
+
+  * ``.create_type : str``, currently only ``TABLE``.
+  * ``.temporary : boolean``, ``True`` if ``CREATE TEMPORARY TABLE``.
+  * ``.overwrite : boolean``, ``False`` when ``IF NOT EXISTS`` is present.
+  * ``.database_name : str``, ``None`` or database.
     name if the table identifier was with a dot
     (e.g. ``db_name.tbl_name``).
   * ``.table_name : str``, table name of ``ALTER
@@ -28,6 +35,12 @@ The following properties are accessible
   * ``.ignore : boolean``, ``True`` if it is ``ALTER
     IGNORE TABLE`` statement (support for it is removed as of MySQL
     5.7.4).
+  * ``.table_options[]: list`` list with ``key`` and ``value`` pairs
+    for table options:
+
+    * ``.key`` key
+    * ``.value`` value
+
   * ``.alter_specification[] : list`` list of individual
     column alterations.
 
