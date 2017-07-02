@@ -75,3 +75,24 @@ class ColumnDefinitionSyntax(unittest.TestCase):
         self.assertFalse(column_definition_syntax.parseString("VARCHAR(255) COMMENT 'test'").auto_increment)
         self.assertFalse(column_definition_syntax.parseString("VARCHAR(255) COMMENT 'test'").index_type)
         self.assertEqual(column_definition_syntax.parseString("VARCHAR(255) COMMENT 'test'").comment, 'test')
+
+class ColumnDefinitionOrderSyntax(unittest.TestCase):
+
+    def test_order_one(self):
+        stmt = column_definition_syntax.parseString("INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL")
+        self.assertFalse(stmt.null)
+        self.assertEqual(stmt.index_type, 'primary_key')
+        self.assertTrue(stmt.auto_increment)
+
+    def test_order_two(self):
+        stmt = column_definition_syntax.parseString("INT(11) AUTO_INCREMENT UNIQUE KEY NULL")
+        self.assertTrue(stmt.null)
+        self.assertEqual(stmt.index_type, 'unique_key')
+        self.assertTrue(stmt.auto_increment)
+
+    def test_order_three(self):
+        stmt = column_definition_syntax.parseString("INT(11) NOT NULL AUTO_INCREMENT COMMENT 'test'")
+        self.assertFalse(stmt.null)
+        self.assertEqual(stmt.index_type, '')
+        self.assertTrue(stmt.auto_increment)
+        self.assertEqual(stmt.comment, 'test')
