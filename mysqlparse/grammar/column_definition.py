@@ -36,8 +36,13 @@ column_definition_syntax = Forward()
 column_definition_syntax <<= (
     data_type_syntax +
     Optional(_nullable, default="implicit").setResultsName("null") +
-    Optional(_default) +
-    Optional(_auto_increment) +
-    Optional(_index_type) +
-    Optional(_comment)
+    ZeroOrMore(
+        MatchFirst([
+            _default,
+            _auto_increment,
+            _index_type,
+            _comment,
+            _nullable.setResultsName("null")
+        ])
+    )
 )

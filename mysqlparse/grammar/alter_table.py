@@ -148,8 +148,7 @@ _ignore = Optional(
 # Source: http://dev.mysql.com/doc/refman/5.7/en/alter-table.html
 #
 
-alter_table_syntax = Forward()
-alter_table_syntax <<= (
+alter_table_syntax = (
     CaselessKeyword("ALTER").setResultsName("statement_type") + _ignore + Suppress(Optional(CaselessKeyword("TABLE"))) +
     _database_name + identifier_syntax.setResultsName("table_name") +
     delimitedList(Group(_alter_specification_syntax).setResultsName("alter_specification", listAllMatches=True)) +
