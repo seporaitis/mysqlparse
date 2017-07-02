@@ -13,7 +13,7 @@ class CreateTableSyntaxTest(unittest.TestCase):
         CREATE TABLE test_test (
           id INT(11) PRIMARY KEY,
           col_no1 VARCHAR(255) NOT NULL
-        )
+        );
         """)
 
         self.assertEqual(statement.statement_type, 'CREATE')
@@ -29,7 +29,7 @@ class CreateTableSyntaxTest(unittest.TestCase):
         CREATE TABLE test_test (
           id INT(11) PRIMARY KEY,
           col_no1 VARCHAR(255) NOT NULL
-        ) ENGINE=MyISAM AUTO_INCREMENT id
+        ) ENGINE=MyISAM AUTO_INCREMENT id;
         """)
 
         self.assertEqual(statement.statement_type, 'CREATE')
@@ -49,7 +49,7 @@ class CreateTableSyntaxTest(unittest.TestCase):
         CREATE TEMPORARY TABLE test_test (
           id INT(11) PRIMARY KEY,
           col_no1 VARCHAR(255) NOT NULL
-        ) ENGINE=MyISAM AUTO_INCREMENT id
+        ) ENGINE=MyISAM AUTO_INCREMENT id;
         """)
 
         self.assertEqual(statement.statement_type, 'CREATE')
@@ -68,7 +68,7 @@ class CreateTableSyntaxTest(unittest.TestCase):
         CREATE TABLE IF NOT EXISTS test_test (
           id INT(11) PRIMARY KEY,
           col_no1 VARCHAR(255) NOT NULL
-        ) ENGINE=MyISAM AUTO_INCREMENT id
+        ) ENGINE=MyISAM AUTO_INCREMENT id;
         """)
 
         self.assertEqual(statement.statement_type, 'CREATE')
@@ -87,7 +87,7 @@ class CreateTableSyntaxTest(unittest.TestCase):
         CREATE TEMPORARY TABLE IF NOT EXISTS test_test (
           id INT(11) PRIMARY KEY,
           col_no1 VARCHAR(255) NOT NULL
-        ) ENGINE=MyISAM AUTO_INCREMENT id
+        ) ENGINE=MyISAM AUTO_INCREMENT id;
         """)
 
         self.assertEqual(statement.statement_type, 'CREATE')

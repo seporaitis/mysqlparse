@@ -33,17 +33,16 @@ _table_option = Word(alphas + "_").setResultsName("key") + Optional(Suppress("="
 # Source: https://dev.mysql.com/doc/refman/5.7/en/create-table.html
 #
 
-create_table_syntax = Forward()
-create_table_syntax <<= (
-    (CaselessKeyword("CREATE").setResultsName("statement_type") + _temporary +
-     _create_type + _if_not_exists + Word(alphanums + "`_").setResultsName("table_name")) +
-    (
-        Suppress("(") +
-        delimitedList(
-            Group(_column_specification_syntax).setResultsName("column_specification", listAllMatches=True)) +
-        Suppress(")")
+create_table_syntax = (
+    CaselessKeyword("CREATE").setResultsName("statement_type") + _temporary +
+    _create_type + _if_not_exists + Word(alphanums + "`_").setResultsName("table_name") +
+    Suppress("(") +
+    delimitedList(
+        OneOrMore(Group(_column_specification_syntax).setResultsName("column_specification", listAllMatches=True))
     ) +
+    Suppress(")") +
     Optional(
         ZeroOrMore(Group(_table_option)), default=[]
-    ).setResultsName("table_options")
+    ).setResultsName("table_options") +
+    Suppress(Optional(";"))
 )
