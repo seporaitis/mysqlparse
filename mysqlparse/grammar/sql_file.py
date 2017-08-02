@@ -4,12 +4,24 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from pyparsing import *
 
 from mysqlparse.grammar.alter_table import alter_table_syntax
+from mysqlparse.grammar.create_table import create_table_syntax
 
 
-sql_file_syntax = Forward()
-sql_file_syntax <<= (
+sql_file_syntax = (
     ZeroOrMore(
-        Suppress(SkipTo(CaselessKeyword("ALTER"))) +
-        Group(alter_table_syntax).setResultsName("statements", listAllMatches=True)
+        Suppress(
+            SkipTo(
+                Or([
+                    CaselessKeyword("ALTER"),
+                    CaselessKeyword("CREATE")
+                ])
+            )
+        ) +
+        Group(
+            Or([
+                alter_table_syntax,
+                create_table_syntax
+            ])
+        ).setResultsName("statements", listAllMatches=True)
     )
 )

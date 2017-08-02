@@ -18,17 +18,21 @@ class ParseTest(unittest.TestCase):
         with open(path.join(self.fixture_dir, 'test.sql'), 'r') as f:
             sql_file = mysqlparse.parse(f.read())
 
-        self.assertEqual(len(sql_file.statements), 2)
+        self.assertEqual(len(sql_file.statements), 4)
         self.assertEqual(sql_file.statements[0].table_name, 'test_table1')
         self.assertEqual(sql_file.statements[1].table_name, 'test_table2')
+        self.assertEqual(sql_file.statements[2].table_name, 'test_table3')
+        self.assertEqual(sql_file.statements[3].table_name, 'test_table4')
 
     def test_file(self):
         with open(path.join(self.fixture_dir, 'test.sql'), 'r') as f:
             sql_file = mysqlparse.parse(f)
 
-        self.assertEqual(len(sql_file.statements), 2)
+        self.assertEqual(len(sql_file.statements), 4)
         self.assertEqual(sql_file.statements[0].table_name, 'test_table1')
         self.assertEqual(sql_file.statements[1].table_name, 'test_table2')
+        self.assertEqual(sql_file.statements[2].table_name, 'test_table3')
+        self.assertEqual(sql_file.statements[3].table_name, 'test_table4')
 
     def test_typeerror(self):
         with self.assertRaises(TypeError) as ctx:
