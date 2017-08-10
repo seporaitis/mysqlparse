@@ -76,7 +76,7 @@ class ColumnDefinitionSyntax(unittest.TestCase):
         self.assertFalse(column_definition_syntax.parseString("VARCHAR(255) COMMENT 'test'").index_type)
         self.assertEqual(column_definition_syntax.parseString("VARCHAR(255) COMMENT 'test'").comment, 'test')
 
-class ColumnDefinitionOrderSyntax(unittest.TestCase):
+class ColumnDefinitionOrderSyntaxTest(unittest.TestCase):
 
     def test_order_one(self):
         stmt = column_definition_syntax.parseString("INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL")
