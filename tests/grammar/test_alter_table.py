@@ -408,3 +408,61 @@ class AlterTableDatabaseNameTest(unittest.TestCase):
         self.assertEqual(statement.alter_specification[3].column_name, 'col_no3')
         self.assertEqual(statement.alter_specification[3].new_column_name, 'col_3')
         self.assertEqual(statement.alter_specification[3].column_position, 'col0')
+
+
+class AlterTableRenameKeysIndexes(unittest.TestCase):
+
+    def test_rename_index(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test RENAME INDEX idx1 TO idx2;
+        """)
+
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test')
+        self.assertEqual(statement.alter_specification[0].old_index_name,
+                         'idx1')
+        self.assertEqual(statement.alter_specification[0].new_index_name,
+                         'idx2')
+
+    def test_rename_key(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test RENAME KEY key1 TO key2;
+        """)
+
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test')
+        self.assertEqual(statement.alter_specification[0].old_key_name, 'key1')
+        self.assertEqual(statement.alter_specification[0].new_key_name, 'key2')
+
+    def test_rename_mixed_index_key(self):
+        statement = alter_table_syntax.parseString("""
+        ALTER TABLE test
+            RENAME INDEX idx1 TO idx2,
+            RENAME KEY key1 TO key2;
+        """)
+
+        self.assertEqual(statement.statement_type, 'ALTER')
+        self.assertEqual(statement.table_name, 'test')
+        self.assertEqual(statement.alter_specification[0].old_index_name,
+                         'idx1')
+        self.assertEqual(statement.alter_specification[0].new_index_name,
+                         'idx2')
+        self.assertEqual(statement.alter_specification[1].old_key_name, 'key1')
+        self.assertEqual(statement.alter_specification[1].new_key_name, 'key2')
+
+
+class AlterTableRename(unittest.TestCase):
+
+    def test_rename_table(self):
+        statements = [
+            "ALTER TABLE test1 RENAME test2;",
+            "ALTER TABLE test1 RENAME TO test2;",
+            "ALTER TABLE test1 RENAME AS test2;"
+            ]
+        for statement in statements:
+            stmt = alter_table_syntax.parseString(statement)
+
+            self.assertEqual(stmt.statement_type, 'ALTER')
+            self.assertEqual(stmt.table_name, 'test1')
+            self.assertEqual(stmt.alter_specification[0].new_table_name,
+                             'test2')
