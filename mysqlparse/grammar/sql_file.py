@@ -6,6 +6,7 @@ from pyparsing import *
 from mysqlparse.grammar.alter_table import alter_table_syntax
 from mysqlparse.grammar.create_table import create_table_syntax
 from mysqlparse.grammar.rename_table import rename_table_syntax
+from mysqlparse.grammar.drop_table import drop_table_syntax
 
 
 sql_file_syntax = (
@@ -15,7 +16,8 @@ sql_file_syntax = (
                 Or([
                     CaselessKeyword("ALTER"),
                     CaselessKeyword("CREATE"),
-                    CaselessKeyword("RENAME")
+                    CaselessKeyword("RENAME"),
+                    CaselessKeyword("DROP"),
                 ])
             )
         ) +
@@ -23,7 +25,8 @@ sql_file_syntax = (
             Or([
                 alter_table_syntax,
                 create_table_syntax,
-                rename_table_syntax
+                rename_table_syntax,
+                drop_table_syntax
             ])
         ).setResultsName("statements", listAllMatches=True)
     )
