@@ -18,3 +18,7 @@ identifier_syntax = Or([
     QuotedString("`"),
     QuotedString("'")
 ]).setParseAction(stripQuotes)
+
+database_name_syntax = (Optional(identifier_syntax + FollowedBy('.') +
+                                 Suppress('.'), default=None)
+                        .setParseAction(lambda s, l, toks: toks[0]))

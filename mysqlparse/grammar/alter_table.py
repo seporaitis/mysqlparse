@@ -4,17 +4,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from pyparsing import *
 
 from mysqlparse.grammar.column_definition import column_definition_syntax
-from mysqlparse.grammar.identifier import identifier_syntax
-
-
-#
-# PARTIAL PARSERS
-#
-
-_database_name = (Optional(identifier_syntax + FollowedBy('.') +
-                           Suppress('.'), default=None)
-                  .setResultsName("database_name")
-                  .setParseAction(lambda s, l, toks: toks[0]))
+from mysqlparse.grammar.identifier import (
+    identifier_syntax,
+    database_name_syntax
+    )
 
 # ADD COLUMN
 _column_name = identifier_syntax.setResultsName("column_name")
@@ -103,6 +96,30 @@ _change_column_specification = [
                    column_definition_syntax) + _last_column),
 ]
 
+# RENAME INDEX
+_rename_index_specification = [(
+    CaselessKeyword("RENAME INDEX").setResultsName("alter_action") +
+    identifier_syntax.setResultsName("old_index_name") +
+    Suppress(CaselessKeyword("TO")) +
+    identifier_syntax.setResultsName("new_index_name")
+    )]
+
+# RENAME KEY
+_rename_key_specification = [(
+    CaselessKeyword("RENAME KEY").setResultsName("alter_action") +
+    identifier_syntax.setResultsName("old_key_name") +
+    Suppress(CaselessKeyword("TO")) +
+    identifier_syntax.setResultsName("new_key_name")
+    )]
+
+# RENAME (TABLE)
+_rename_table_specification = [(
+    CaselessKeyword("RENAME").setResultsName("alter_action") +
+    ~FollowedBy(Or([CaselessKeyword("INDEX"), CaselessKeyword("KEY")])) +
+    Suppress(Optional(Or([CaselessKeyword("TO"), CaselessKeyword("AS")]))) +
+    database_name_syntax.setResultsName("new_database_name") +
+    identifier_syntax.setResultsName("new_table_name")
+    )]
 
 # DROP
 _fk_symbol = identifier_syntax.setResultsName("fk_symbol")
@@ -132,6 +149,9 @@ _alter_specification_syntax <<= (
         _alter_index_specification +
         _modify_column_specification +
         _change_column_specification +
+        _rename_index_specification +
+        _rename_key_specification +
+        _rename_table_specification +
         _drop_specification
     ))
 )
@@ -150,7 +170,8 @@ _ignore = Optional(
 
 alter_table_syntax = (
     CaselessKeyword("ALTER").setResultsName("statement_type") + _ignore + Suppress(Optional(CaselessKeyword("TABLE"))) +
-    _database_name + identifier_syntax.setResultsName("table_name") +
+    database_name_syntax.setResultsName("database_name") +
+    identifier_syntax.setResultsName("table_name") +
     delimitedList(Group(_alter_specification_syntax).setResultsName("alter_specification", listAllMatches=True)) +
     Suppress(Optional(";"))
 )
