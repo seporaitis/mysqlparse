@@ -16,7 +16,7 @@ _nullable = Or([
 ])
 _default = (
     Suppress(CaselessKeyword("DEFAULT")) +
-    Or([Word(nums), QuotedString("'"), CaselessKeyword("NULL")]).setName("default").setResultsName("default")
+    Or([Word(nums), QuotedString("'"), CaselessKeyword("NULL"), CaselessKeyword("CURRENT_TIMESTAMP")]).setName("default").setResultsName("default")
 )
 _auto_increment = CaselessKeyword("AUTO_INCREMENT").setResultsName("auto_increment").setParseAction(replaceWith(True))
 _index_type = Or([
